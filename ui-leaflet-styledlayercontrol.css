@@ -9,6 +9,7 @@
 	padding: 5px;
 }
 
+
 .angular-leaflet-control-layers .lf-row label {
 	cursor: pointer;
 	width: 75%;
@@ -35,4 +36,14 @@
 
 .angular-leaflet-control-layers .lf-row .lf-icons {
 	float: right;
+}
+
+.leaflet-control-layers-toggle{
+	position: absolute;
+	background-color: white;
+	z-index: 100;
+	left: 10px;
+	top: 100px;
+	box-shadow: 1px 1px 5px #333;
+	padding: 5px;
 }

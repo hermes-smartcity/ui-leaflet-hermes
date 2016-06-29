@@ -46,6 +46,7 @@
 			layerProperties: {},
 			groupProperties: {},
 			rangeIsSupported: leafletHelpers.rangeIsSupported(),
+			mostrarIconSmallLayerManager: true,
 			changeBaseLayer: function(key, e) {
 			  leafletHelpers.safeApply($scope, function(scp) {
 				scp.baselayer = key;
@@ -352,49 +353,52 @@
 		}],
 
 		template:
-		'<div class="angular-leaflet-control-layers" ng-show="overlaysArray.length">' +
-			'<h4 ng-if="title">{{ title }}</h4>' +
-			'<div class="lf-baselayers">' +
-				'<h5 class="lf-title" ng-if="baseTitle">{{ baseTitle }}</h5>' +
-				'<div class="lf-row" ng-repeat="(key, layer) in baselayersArray">' +
-					'<label class="lf-icon-bl" ng-click="changeBaseLayer(key, $event)">' +
-						'<input class="leaflet-control-layers-selector" type="radio" name="lf-radio" ' +
-							'ng-show="false" ng-checked="baselayer === key" ng-value="key" /> ' +
-						'<i class="lf-icon lf-icon-radio" ng-class="layer.icon"></i>' +
-						'<div class="lf-text">{{layer.name}}</div>' +
-					'</label>' +
-				'</div>' +
-			'</div>' +
-			'<div class="lf-overlays">' +
-				'<h5 class="lf-title" ng-if="overlaysTitle">{{ overlaysTitle }}</h5>' +
-				'<div class="lf-container">' +
-					'<div class="lf-row" ng-repeat="layer in (o = (overlaysArray | orderBy:\'index\':order))" ng-init="initIndex(layer, $index)">' +
-						'<label class="lf-icon-ol-group" ng-if="showGroups &amp;&amp; layer.group &amp;&amp; layer.group != o[$index-1].group">' +
-							'<input class="lf-control-layers-selector" type="checkbox" ng-show="false" ' +
-								'ng-change="changeGroupVisibility(layer.group)" ng-model="groupProperties[layer.group].visible"/> ' +
-							'<i class="lf-icon lf-icon-check" ng-class="getGroupIcon(groupProperties[layer.group])"></i>' +
-							'<div class="lf-text">{{ layer.group }}</div>' +
-						'</label>' +
-						'<label class="lf-icon-ol">' +
-							'<input class="lf-control-layers-selector" type="checkbox" ng-show="false" ng-model="layer.visible"/> ' +
-							'<i class="lf-icon lf-icon-check" ng-class="layer.icon"></i>' +
+		'<div>' +
+			'<div class="leaflet-control-layers-toggle" ng-show="mostrarIconSmallLayerManager" ng-mouseover="mostrarIconSmallLayerManager = false"> </div>' +
+			'<div class="angular-leaflet-control-layers" ng-show="overlaysArray.length && !mostrarIconSmallLayerManager" ng-mouseleave="mostrarIconSmallLayerManager = true">' +
+				'<h4 ng-if="title">{{ title }}</h4>' +
+				'<div class="lf-baselayers">' +
+					'<h5 class="lf-title" ng-if="baseTitle">{{ baseTitle }}</h5>' +
+					'<div class="lf-row" ng-repeat="(key, layer) in baselayersArray">' +
+						'<label class="lf-icon-bl" ng-click="changeBaseLayer(key, $event)">' +
+							'<input class="leaflet-control-layers-selector" type="radio" name="lf-radio" ' +
+								'ng-show="false" ng-checked="baselayer === key" ng-value="key" /> ' +
+							'<i class="lf-icon lf-icon-radio" ng-class="layer.icon"></i>' +
 							'<div class="lf-text">{{layer.name}}</div>' +
 						'</label>' +
-						'<div class="lf-icons">' +
-							'<i class="lf-icon lf-up" ng-class="icons.up" ng-click="moveLayer(layer, layer.index - orderNumber, $event)"></i> ' +
-							'<i class="lf-icon lf-down" ng-class="icons.down" ng-click="moveLayer(layer, layer.index + orderNumber, $event)"></i> ' +
-							'<i class="lf-icon lf-toggle-legend" ng-class="icons.toggleLegend" ng-if="layer.legend" ng-click="toggleLegend(layer)"></i> ' +
-							'<i class="lf-icon lf-open" ng-class="getOpacityIcon(layer)" ng-click="toggleOpacity($event, layer)"></i>' +
-							'<i class="lf-icon lf-deleteLayer" ng-class="icons.deleteLayer" ng-click="deleteLayer(layer.index, layer)"></i> ' +
-							'<i class="lf-icon lf-editLayer" ng-class="icons.editLayer" ng-click="editLayer(layer.index, layer)"></i> ' +
-						'</div>' +
-						'<div class="lf-legend" ng-if="showLegend(layer)" ng-bind-html="unsafeHTML(layer.legend)"></div>' +
-						'<div class="lf-opacity clearfix" ng-if="layer.visible &amp;&amp; layerProperties[layer.name].opacityControl">' +
-							'<label ng-if="rangeIsSupported" class="pull-left" style="width: 50%">0</label>' +
-							'<label ng-if="rangeIsSupported" class="pull-left text-right" style="width: 50%">100</label>' +
-							'<input ng-if="rangeIsSupported" class="clearfix" type="range" min="0" max="100" class="lf-opacity-control" ' +
-								'ng-model="layerProperties[layer.name].opacity" ng-change="changeOpacity(layer)"/>' +
-							'<h6 ng-if="!rangeIsSupported">Range is not supported in this browser</h6>' +
+					'</div>' +
+				'</div>' +
+				'<div class="lf-overlays">' +
+					'<h5 class="lf-title" ng-if="overlaysTitle">{{ overlaysTitle }}</h5>' +
+					'<div class="lf-container">' +
+						'<div class="lf-row" ng-repeat="layer in (o = (overlaysArray | orderBy:\'index\':order))" ng-init="initIndex(layer, $index)">' +
+							'<label class="lf-icon-ol-group" ng-if="showGroups &amp;&amp; layer.group &amp;&amp; layer.group != o[$index-1].group">' +
+								'<input class="lf-control-layers-selector" type="checkbox" ng-show="false" ' +
+									'ng-change="changeGroupVisibility(layer.group)" ng-model="groupProperties[layer.group].visible"/> ' +
+								'<i class="lf-icon lf-icon-check" ng-class="getGroupIcon(groupProperties[layer.group])"></i>' +
+								'<div class="lf-text">{{ layer.group }}</div>' +
+							'</label>' +
+							'<label class="lf-icon-ol">' +
+								'<input class="lf-control-layers-selector" type="checkbox" ng-show="false" ng-model="layer.visible"/> ' +
+								'<i class="lf-icon lf-icon-check" ng-class="layer.icon"></i>' +
+								'<div class="lf-text">{{layer.name}}</div>' +
+							'</label>' +
+							'<div class="lf-icons">' +
+								'<i class="lf-icon lf-up" ng-class="icons.up" ng-click="moveLayer(layer, layer.index - orderNumber, $event)"></i> ' +
+								'<i class="lf-icon lf-down" ng-class="icons.down" ng-click="moveLayer(layer, layer.index + orderNumber, $event)"></i> ' +
+								'<i class="lf-icon lf-toggle-legend" ng-class="icons.toggleLegend" ng-if="layer.legend" ng-click="toggleLegend(layer)"></i> ' +
+								'<i class="lf-icon lf-open" ng-class="getOpacityIcon(layer)" ng-click="toggleOpacity($event, layer)"></i>' +
+								'<i class="lf-icon lf-deleteLayer" ng-class="icons.deleteLayer" ng-click="deleteLayer(layer.index, layer)"></i> ' +
+								'<i class="lf-icon lf-editLayer" ng-class="icons.editLayer" ng-click="editLayer(layer.index, layer)"></i> ' +
+							'</div>' +
+							'<div class="lf-legend" ng-if="showLegend(layer)" ng-bind-html="unsafeHTML(layer.legend)"></div>' +
+							'<div class="lf-opacity clearfix" ng-if="layer.visible &amp;&amp; layerProperties[layer.name].opacityControl">' +
+								'<label ng-if="rangeIsSupported" class="pull-left" style="width: 50%">0</label>' +
+								'<label ng-if="rangeIsSupported" class="pull-left text-right" style="width: 50%">100</label>' +
+								'<input ng-if="rangeIsSupported" class="clearfix" type="range" min="0" max="100" class="lf-opacity-control" ' +
+									'ng-model="layerProperties[layer.name].opacity" ng-change="changeOpacity(layer)"/>' +
+								'<h6 ng-if="!rangeIsSupported">Range is not supported in this browser</h6>' +
+							'</div>' +
 						'</div>' +
 					'</div>' +
 				'</div>' +
