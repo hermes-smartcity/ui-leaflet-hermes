@@ -38,7 +38,7 @@
 	float: right;
 }
 
-.leaflet-control-layers-toggle{
+.angular-leaflet-control-layers-toggle{
 	position: absolute;
 	background-color: white;
 	z-index: 100;
