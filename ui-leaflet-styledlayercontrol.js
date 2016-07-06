@@ -354,7 +354,7 @@
 
 		template:
 		'<div>' +
-			'<div class="leaflet-control-layers-toggle" ng-show="mostrarIconSmallLayerManager" ng-mouseover="mostrarIconSmallLayerManager = false"> </div>' +
+			'<div class="angular-leaflet-control-layers-toggle" ng-show="mostrarIconSmallLayerManager" ng-mouseover="mostrarIconSmallLayerManager = false"> </div>' +
 			'<div class="angular-leaflet-control-layers" ng-show="overlaysArray.length && !mostrarIconSmallLayerManager" ng-mouseleave="mostrarIconSmallLayerManager = true">' +
 				'<h4 ng-if="title">{{ title }}</h4>' +
 				'<div class="lf-baselayers">' +
